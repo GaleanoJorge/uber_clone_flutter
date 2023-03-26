@@ -1,4 +1,4 @@
-package com.example.uber_clone
+package com.jagb.uber_clone
 
 import io.flutter.embedding.android.FlutterActivity
 

@@ -1,11 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:uber_clone/pages/home/home_controller.dart';
 
 class HomePage extends StatelessWidget {
-  const HomePage({Key? key}) : super(key: key);
+  HomePage({Key? key}) : super(key: key);
+
+  final HomeController _con = new HomeController();
 
   @override
   Widget build(BuildContext context) {
+
+    _con.init(context);
+
     return Scaffold(
         body: SafeArea(
       child: Container(
@@ -24,7 +30,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            _imageTypeUser('assets/img/pasajero.png'),
+            _imageTypeUser(context, 'assets/img/pasajero.png'),
             SizedBox(
               height: 10,
             ),
@@ -32,7 +38,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            _imageTypeUser('assets/img/driver.png'),
+            _imageTypeUser(context, 'assets/img/driver.png'),
             SizedBox(
               height: 10,
             ),
@@ -44,41 +50,44 @@ class HomePage extends StatelessWidget {
   }
 
   Widget _bannerApp(BuildContext context) => ClipPath(
-              clipper: DiagonalPathClipperTwo(),
-              child: Container(
-                color: Colors.white,
-                height: MediaQuery.of(context).size.height * 0.3,
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    Image.asset(
-                      'assets/img/logo_app.png',
-                      width: 150,
-                      height: 100,
-                    ),
-                    Text(
-                      'Facil y Rapido',
-                      style: TextStyle(
-                          fontFamily: 'Pacifico',
-                          fontSize: 22,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+        clipper: DiagonalPathClipperTwo(),
+        child: Container(
+          color: Colors.white,
+          height: MediaQuery.of(context).size.height * 0.3,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Image.asset(
+                'assets/img/logo_app.png',
+                width: 150,
+                height: 100,
               ),
-            );
+              Text(
+                'Facil y Rapido',
+                style: TextStyle(
+                    fontFamily: 'Pacifico',
+                    fontSize: 22,
+                    fontWeight: FontWeight.bold),
+              ),
+            ],
+          ),
+        ),
+      );
 
   Widget _selectYourRole() => Text('SELECCIONA TU ROL',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 20,
-                  fontFamily: 'OneDay',
-                ));
+      style: TextStyle(
+        color: Colors.white,
+        fontSize: 20,
+        fontFamily: 'OneDay',
+      ));
 
-  Widget _imageTypeUser(String asset) => CircleAvatar(
-        backgroundImage: AssetImage(asset),
-        radius: 50,
-        backgroundColor: Colors.grey[900],
+  Widget _imageTypeUser(BuildContext context, String asset) => GestureDetector(
+    onTap: () {_con.goToLoginPage();},
+        child: CircleAvatar(
+          backgroundImage: AssetImage(asset),
+          radius: 50,
+          backgroundColor: Colors.grey[900],
+        ),
       );
 
   Widget _textTypeUser(String typeuser) => Text(typeuser,
@@ -86,4 +95,6 @@ class HomePage extends StatelessWidget {
         color: Colors.white,
         fontSize: 16,
       ));
+
+  
 }

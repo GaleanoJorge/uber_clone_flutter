@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
+import 'package:uber_clone/src/pages/login/login_controller.dart';
 import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
 import '../../widgets/button_app.dart';
@@ -12,44 +14,64 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  LoginController _con = LoginController();
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+
+    SchedulerBinding.instance.addPostFrameCallback((timeStamp) {
+      _con.init(context);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
         appBar: AppBar(
           backgroundColor: utils.Colors.uberCloneColor,
         ),
-        body: Column(
-          children: [
-            _bannerApp(),
-            _textDescription(),
-            _txtLogin(),
-            Expanded(child: Container()),
-            _textFieldEmail(),
-            _textFieldPassword(),
-            _buttonLogin(),
-            _dontHaveAccount(),
-          ],
+        body: SingleChildScrollView(
+          child: Column(
+            children: [
+              _bannerApp(),
+              _textDescription(),
+              _txtLogin(),
+              SizedBox(
+                height: MediaQuery.of(context).size.height * 0.17,
+              ),
+              _textFieldEmail(),
+              _textFieldPassword(),
+              _buttonLogin(),
+              _dontHaveAccount(),
+            ],
+          ),
         ));
   }
 
   Widget _dontHaveAccount() => Container(
-    margin: EdgeInsets.only(bottom: 50),
-    child: Text(
-      'No tienes cuenta?',
-      style: TextStyle(
-        fontSize: 15,
-        color: Colors.grey,
-      ),
-    ),
-  );
+        margin: EdgeInsets.only(bottom: 50),
+        child: Text(
+          'No tienes cuenta?',
+          style: TextStyle(
+            fontSize: 15,
+            color: Colors.grey,
+          ),
+        ),
+      );
 
   Widget _buttonLogin() => Container(
-    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-    child: ButtonApp(text: 'Iniciar Sesion',));
+      margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+      child: ButtonApp(
+        text: 'Iniciar Sesion',
+        onPressed: _con.login,
+      ));
 
   Widget _textFieldPassword() => Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         child: TextField(
+          controller: _con.passwordController,
           obscureText: true,
           decoration: InputDecoration(
             labelText: 'Contraseña',
@@ -64,6 +86,7 @@ class _LoginPageState extends State<LoginPage> {
   Widget _textFieldEmail() => Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),
         child: TextField(
+          controller: _con.emailController,
           decoration: InputDecoration(
             hintText: 'correo@mail.com',
             labelText: 'Correo electrónico',

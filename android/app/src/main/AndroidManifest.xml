@@ -1,5 +1,8 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.jagb.uber_clone">
+
+    <uses-permission android:name="android.permission.INTERNET" />
+
    <application
         android:label="uber_clone"
         android:name="${applicationName}"

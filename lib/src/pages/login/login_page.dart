@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
+import '../../widgets/button_app.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);
 
@@ -42,19 +44,8 @@ class _LoginPageState extends State<LoginPage> {
   );
 
   Widget _buttonLogin() => Container(
-        width: double.infinity,
-        margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
-        child: ElevatedButton(
-          onPressed: () {},
-          child: Text(
-            'Iniciar Sesion',
-            style: TextStyle(color: Colors.white),
-          ),
-          style: ElevatedButton.styleFrom(
-            primary: utils.Colors.uberCloneColor,
-          ),
-        ),
-      );
+    margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),
+    child: ButtonApp(text: 'Iniciar Sesion',));
 
   Widget _textFieldPassword() => Container(
         margin: EdgeInsets.symmetric(horizontal: 30, vertical: 15),

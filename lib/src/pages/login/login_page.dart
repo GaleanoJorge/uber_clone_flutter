@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uber_clone/utils/Colors.dart' as utils;
+import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key? key}) : super(key: key);

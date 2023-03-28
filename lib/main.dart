@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:uber_clone/pages/home/home_page.dart';
-import 'package:uber_clone/pages/login/login_page.dart';
-import 'package:uber_clone/utils/Colors.dart' as utils;
+import 'package:uber_clone/src/pages/home/home_page.dart';
+import 'package:uber_clone/src/pages/login/login_page.dart';
+import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
 void main() {
   runApp(const MyApp());

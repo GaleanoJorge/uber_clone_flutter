@@ -2,6 +2,7 @@ import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:uber_clone/src/pages/home/home_page.dart';
 import 'package:uber_clone/src/pages/login/login_page.dart';
+import 'package:uber_clone/src/pages/register/register_page.dart';
 import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
 void main() async {
@@ -34,6 +35,7 @@ class _MyAppState extends State<MyApp> {
       routes: {
         'home' : (BuildContext context) => HomePage(),
         'login' : (BuildContext context) => LoginPage(),
+        'register' : (BuildContext context) => RegisterPage(),
       },
     );
   }

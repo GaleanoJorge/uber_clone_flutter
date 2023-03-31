@@ -34,4 +34,8 @@ class LoginController {
       print('Error: $error');
     }
   }
+
+  void goToRegisterPage() {
+    Navigator.pushNamed(context!, 'register');
+  } 
 }

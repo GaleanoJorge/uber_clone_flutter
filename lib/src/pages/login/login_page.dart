@@ -50,16 +50,19 @@ class _LoginPageState extends State<LoginPage> {
         ));
   }
 
-  Widget _dontHaveAccount() => Container(
-        margin: EdgeInsets.only(bottom: 50),
-        child: Text(
-          'No tienes cuenta?',
-          style: TextStyle(
-            fontSize: 15,
-            color: Colors.grey,
+  Widget _dontHaveAccount() => GestureDetector(
+    onTap: _con.goToRegisterPage,
+    child: Container(
+          margin: EdgeInsets.only(bottom: 50),
+          child: Text(
+            'No tienes cuenta?',
+            style: TextStyle(
+              fontSize: 15,
+              color: Colors.grey,
+            ),
           ),
         ),
-      );
+  );
 
   Widget _buttonLogin() => Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),

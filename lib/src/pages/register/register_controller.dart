@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:uber_clone/src/models/client.dart';
 import 'package:uber_clone/src/providers/auth_provider.dart';
+import 'package:uber_clone/src/providers/client_provider.dart';
+import 'package:uber_clone/src/utils/snackbar.dart' as utils;
 
 class RegisterController {
   BuildContext? context;
@@ -10,11 +13,13 @@ class RegisterController {
   TextEditingController passwordController = new TextEditingController();
 
   AuthProvider? _authProvider;
+  ClientProvider? _clientProvider;
 
   Future? init(BuildContext context) {
     this.context = context;
 
     _authProvider = new AuthProvider();
+    _clientProvider = new ClientProvider();
   }
 
   void register() async {
@@ -27,16 +32,19 @@ class RegisterController {
         password.isEmpty &&
         userName.isEmpty &&
         confirmPassword.isEmpty) {
-      print('ddebe ingresar todos los campos');
+      utils.Snackbar.showSnackbarr(context!, 'debe ingresar todos los campos');
+      print('debe ingresar todos los campos');
       return;
     }
 
-    if(confirmPassword != password) {
+    if (confirmPassword != password) {
+      utils.Snackbar.showSnackbarr(context!, 'la contraseña no coincide');
       print('la contraseña no coincide');
       return;
     }
 
-    if(password.length < 6) {
+    if (password.length < 6) {
+      utils.Snackbar.showSnackbarr(context!, 'la clave debe tener el menos 6 caracteres');
       print('la clave debe tener el menos 6 caracteres');
       return;
     }
@@ -45,11 +53,18 @@ class RegisterController {
       bool isRegister = await _authProvider!.register(email, password);
 
       if (isRegister) {
+        Client client = Client(
+            id: _authProvider!.getUser()!.uid,
+            name: _authProvider!.getUser()!.email,
+            email: email);
+
+        await _clientProvider?.create(client);
         print('yes');
       } else {
         print('no');
       }
     } catch (error) {
+      utils.Snackbar.showSnackbarr(context!, 'Error: $error');
       print('Error: $error');
     }
   }

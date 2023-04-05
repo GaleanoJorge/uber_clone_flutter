@@ -3,6 +3,9 @@ import 'package:uber_clone/src/models/client.dart';
 import 'package:uber_clone/src/providers/auth_provider.dart';
 import 'package:uber_clone/src/providers/client_provider.dart';
 import 'package:uber_clone/src/utils/snackbar.dart' as utils;
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:uber_clone/src/providers/auth_provider.dart';
+import 'package:uber_clone/src/utils/progress_dialog.dart';
 
 class RegisterController {
   BuildContext? context;
@@ -14,12 +17,16 @@ class RegisterController {
 
   AuthProvider? _authProvider;
   ClientProvider? _clientProvider;
+  ProgressDialog? _myProgressDialog;
 
   Future? init(BuildContext context) {
     this.context = context;
 
     _authProvider = new AuthProvider();
     _clientProvider = new ClientProvider();
+
+    _myProgressDialog =
+        MyProgressDialog.createPrograssDialog(context, 'Espere un momento...');
   }
 
   void register() async {
@@ -44,10 +51,13 @@ class RegisterController {
     }
 
     if (password.length < 6) {
-      utils.Snackbar.showSnackbarr(context!, 'la clave debe tener el menos 6 caracteres');
+      utils.Snackbar.showSnackbarr(
+          context!, 'la clave debe tener el menos 6 caracteres');
       print('la clave debe tener el menos 6 caracteres');
       return;
     }
+
+    _myProgressDialog!.show();
 
     try {
       bool isRegister = await _authProvider!.register(email, password);
@@ -60,11 +70,15 @@ class RegisterController {
 
         await _clientProvider?.create(client);
         print('yes');
+        print('.................................yes');
       } else {
-        print('no');
+        print('.................................no');
       }
+
+      _myProgressDialog!.hide();
     } catch (error) {
       utils.Snackbar.showSnackbarr(context!, 'Error: $error');
+      _myProgressDialog!.hide();
       print('Error: $error');
     }
   }

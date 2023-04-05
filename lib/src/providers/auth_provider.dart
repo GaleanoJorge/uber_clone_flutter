@@ -8,6 +8,10 @@ class AuthProvider {
     _firebaseAuth = FirebaseAuth.instance;
   }
 
+  User? getUser() {
+    return _firebaseAuth?.currentUser;
+  }
+
   Future<bool> login(String email, String password) async {
     String? errorMessage;
 

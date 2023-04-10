@@ -39,3 +39,8 @@ post_install do |installer|
     flutter_additional_ios_build_settings(target)
   end
 end
+
+# Add the pods for the Firebase products you want to use in your app
+# For example, to use Firebase Authentication and Cloud Firestore
+pod 'FirebaseAuth'
+pod 'FirebaseFirestore'

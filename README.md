@@ -19,7 +19,7 @@ clon de la app de Uber usando flutter
 
 - instalar visual studio code
 
-## Obtener sha-1 de la app  
+## Obtener sha-1 de la app en windows
 
 - en la consola del proyecto digitar el siguiente comando:
 	keytool -list -v -keystore ~/.android/debug.keystore -alias androiddebugkey -storepass android -keypass android

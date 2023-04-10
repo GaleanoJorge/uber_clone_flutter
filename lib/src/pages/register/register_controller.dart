@@ -68,10 +68,13 @@ class RegisterController {
             name: _authProvider!.getUser()!.email,
             email: email);
 
+        print('=========================================================');
         await _clientProvider?.create(client);
-        print('yes');
+        print('=========================================================');
+        utils.Snackbar.showSnackbarr(context!, 'Usuario creado correctamente.');
         print('.................................yes');
       } else {
+        utils.Snackbar.showSnackbarr(context!, 'Error al crear el usuario');
         print('.................................no');
       }
 

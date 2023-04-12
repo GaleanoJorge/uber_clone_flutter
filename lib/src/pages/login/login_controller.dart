@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:uber_clone/src/providers/auth_provider.dart';
 import 'package:uber_clone/src/utils/progress_dialog.dart';
+import 'package:uber_clone/src/utils/shared_pref.dart';
 import 'package:uber_clone/src/utils/snackbar.dart' as utils;
 
 class LoginController {
@@ -12,13 +13,21 @@ class LoginController {
 
   AuthProvider? _authProvider;
   ProgressDialog? _myProgressDialog;
+  late SharedPref _sharedPref;
 
-  Future? init(BuildContext context) {
+  String? _typeUser;
+
+  Future? init(BuildContext context) async {
     this.context = context;
 
     _authProvider = new AuthProvider();
+    _sharedPref = new SharedPref();
     _myProgressDialog =
         MyProgressDialog.createPrograssDialog(context, 'Espere un momento...');
+
+    _typeUser = await _sharedPref.read('typeUser');
+
+    print(_typeUser);
   }
 
   void login() async {

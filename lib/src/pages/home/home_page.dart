@@ -9,7 +9,6 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-
     _con.init(context);
 
     return Scaffold(
@@ -30,7 +29,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            _imageTypeUser(context, 'assets/img/pasajero.png'),
+            _imageTypeUser(context, 'assets/img/pasajero.png', 'clinet'),
             SizedBox(
               height: 10,
             ),
@@ -38,7 +37,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            _imageTypeUser(context, 'assets/img/driver.png'),
+            _imageTypeUser(context, 'assets/img/driver.png', 'driver'),
             SizedBox(
               height: 10,
             ),
@@ -81,8 +80,11 @@ class HomePage extends StatelessWidget {
         fontFamily: 'OneDay',
       ));
 
-  Widget _imageTypeUser(BuildContext context, String asset) => GestureDetector(
-    onTap: () {_con.goToLoginPage();},
+  Widget _imageTypeUser(BuildContext context, String asset, String typeUser) =>
+      GestureDetector(
+        onTap: () {
+          _con.goToLoginPage(typeUser);
+        },
         child: CircleAvatar(
           backgroundImage: AssetImage(asset),
           radius: 50,
@@ -95,6 +97,4 @@ class HomePage extends StatelessWidget {
         color: Colors.white,
         fontSize: 16,
       ));
-
-  
 }

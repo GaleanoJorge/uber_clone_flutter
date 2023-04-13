@@ -1,20 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
-import 'package:uber_clone/src/pages/register/register_controller.dart';
+import 'package:uber_clone/src/pages/client/client_register/client_register_controller.dart';
 import 'package:uber_clone/src/utils/Colors.dart' as utils;
 
-import '../../widgets/button_app.dart';
+import '../../../widgets/button_app.dart';
 
-class RegisterPage extends StatefulWidget {
-  RegisterPage({Key? key}) : super(key: key);
+class ClientRegisterPage extends StatefulWidget {
+  ClientRegisterPage({Key? key}) : super(key: key);
 
   @override
-  State<RegisterPage> createState() => _RegisterPageState();
+  State<ClientRegisterPage> createState() => _ClientRegisterPageState();
 }
 
-class _RegisterPageState extends State<RegisterPage> {
-  RegisterController _con = RegisterController();
+class _ClientRegisterPageState extends State<ClientRegisterPage> {
+  ClientRegisterController _con = ClientRegisterController();
 
   @override
   void initState() {

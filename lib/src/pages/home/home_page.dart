@@ -29,7 +29,7 @@ class HomePage extends StatelessWidget {
             SizedBox(
               height: 30,
             ),
-            _imageTypeUser(context, 'assets/img/pasajero.png', 'clinet'),
+            _imageTypeUser(context, 'assets/img/pasajero.png', 'client'),
             SizedBox(
               height: 10,
             ),

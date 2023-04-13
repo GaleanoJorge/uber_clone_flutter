@@ -7,7 +7,7 @@ import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
 import 'package:uber_clone/src/providers/auth_provider.dart';
 import 'package:uber_clone/src/utils/progress_dialog.dart';
 
-class RegisterController {
+class ClientRegisterController {
   BuildContext? context;
 
   TextEditingController userNameController = new TextEditingController();

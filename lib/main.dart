@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:uber_clone/src/pages/client/client_map/client_map_page.dart';
+import 'package:uber_clone/src/pages/driver/driver_map/driver_map_page.dart';
 import 'package:uber_clone/src/pages/driver/driver_register/driver_register_page.dart';
 import 'package:uber_clone/src/pages/home/home_page.dart';
 import 'package:uber_clone/src/pages/login/login_page.dart';
@@ -38,6 +40,8 @@ class _MyAppState extends State<MyApp> {
         'login': (BuildContext context) => LoginPage(),
         'client/register': (BuildContext context) => ClientRegisterPage(),
         'driver/register': (BuildContext context) => DriverRegisterPage(),
+        'client/map': (BuildContext context) => ClientMapPage(),
+        'driver/map': (BuildContext context) => DriverMapPage(),
       },
     );
   }

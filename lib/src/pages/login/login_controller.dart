@@ -43,15 +43,17 @@ class LoginController {
       bool isLogin = await _authProvider!.login(email, password);
 
       if (isLogin) {
+        _myProgressDialog!.hide();
         utils.Snackbar.showSnackbarr(context!, 'Usuario logeado.');
         print('yes');
+        Navigator.pushNamedAndRemoveUntil(
+            context!, 'client/map', (route) => false);
       } else {
+        _myProgressDialog!.hide();
         utils.Snackbar.showSnackbarr(
             context!, 'El usuario no se pudo autentificar.');
         print('no');
       }
-
-      _myProgressDialog!.hide();
     } catch (error) {
       _myProgressDialog!.hide();
       utils.Snackbar.showSnackbarr(context!, 'Error: $error');

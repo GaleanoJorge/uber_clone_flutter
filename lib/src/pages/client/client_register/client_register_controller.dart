@@ -79,6 +79,8 @@ class ClientRegisterController {
       }
 
       _myProgressDialog!.hide();
+      Navigator.pushNamedAndRemoveUntil(
+          context!, 'client/map', (route) => false);
     } catch (error) {
       utils.Snackbar.showSnackbarr(context!, 'Error: $error');
       _myProgressDialog!.hide();

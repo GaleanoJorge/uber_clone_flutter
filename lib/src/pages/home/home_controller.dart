@@ -7,13 +7,30 @@ class HomeController {
   late SharedPref _sharedPref;
 
   late AuthProvider _authProvider;
+  late String _typeUser;
 
-  Future? init(BuildContext context) {
+  Future? init(BuildContext context) async {
     this.context = context;
 
     _sharedPref = new SharedPref();
     _authProvider = new AuthProvider();
-    _authProvider.checkIfUserIsLogged(context);
+    _typeUser = await _sharedPref.read('typeUser');
+
+    checkIfUserIsAuth();
+  }
+
+  void checkIfUserIsAuth() {
+    bool isSigned = _authProvider.isSignedIn();
+
+    if (isSigned) {
+      if (_typeUser == 'client') {
+        Navigator.pushNamedAndRemoveUntil(
+            context!, 'client/map', (route) => false);
+      } else {
+        Navigator.pushNamedAndRemoveUntil(
+            context!, 'driver/map', (route) => false);
+      }
+    }
   }
 
   void goToLoginPage(String typeUser) {

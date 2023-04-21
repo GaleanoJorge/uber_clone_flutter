@@ -4,7 +4,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uber_clone/src/models/client.dart';
 
 class ClientProvider {
-
   late CollectionReference _ref;
 
   ClientProvider() {
@@ -23,5 +22,13 @@ class ClientProvider {
     if (errorMessage != null) {
       return Future.error(errorMessage);
     }
+  }
+
+  Future<Client?> getById(String id) async {
+    DocumentSnapshot document = await _ref.doc(id).get();
+    if (document.exists) {
+      return Client.fromJson(document.data() as Map<String, dynamic>);
+    }
+    return null;
   }
 }

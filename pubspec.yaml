@@ -41,6 +41,7 @@ dependencies:
   cloud_firestore: ^4.5.0
   progress_dialog_null_safe: ^1.0.4
   shared_preferences: ^2.1.0
+  google_maps_flutter: ^2.2.5
 
 dev_dependencies:
   flutter_test:

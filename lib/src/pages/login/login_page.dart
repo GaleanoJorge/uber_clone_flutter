@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uber_clone/src/pages/login/login_controller.dart';
-import 'package:uber_clone/src/utils/Colors.dart' as utils;
+import 'package:uber_clone/src/utils/colors.dart' as utils;
 
 import '../../widgets/button_app.dart';
 
@@ -51,8 +51,8 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   Widget _dontHaveAccount() => GestureDetector(
-    onTap: _con.goToRegisterPage,
-    child: Container(
+        onTap: _con.goToRegisterPage,
+        child: Container(
           margin: EdgeInsets.only(bottom: 50),
           child: Text(
             'No tienes cuenta?',
@@ -62,7 +62,7 @@ class _LoginPageState extends State<LoginPage> {
             ),
           ),
         ),
-  );
+      );
 
   Widget _buttonLogin() => Container(
       margin: EdgeInsets.symmetric(horizontal: 30, vertical: 25),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 import 'package:flutter_custom_clippers/flutter_custom_clippers.dart';
 import 'package:uber_clone/src/pages/client/client_register/client_register_controller.dart';
-import 'package:uber_clone/src/utils/Colors.dart' as utils;
+import 'package:uber_clone/src/utils/colors.dart' as utils;
 
 import '../../../widgets/button_app.dart';
 

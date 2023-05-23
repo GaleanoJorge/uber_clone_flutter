@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:uber_clone/src/utils/Colors.dart' as utils;
+import 'package:uber_clone/src/utils/colors.dart' as utils;
 
 class ButtonApp extends StatelessWidget {
   String? text;

@@ -99,8 +99,9 @@ class _DriverMapPageState extends State<DriverMapPage> {
       initialCameraPosition: _con.initialPosition,
       mapType: MapType.normal,
       onMapCreated: _con.onMapCreated,
-      myLocationEnabled: true,
-      myLocationButtonEnabled: true,
+      myLocationEnabled: false,
+      myLocationButtonEnabled: false,
+      markers: Set<Marker>.of(_con.markers.values),
     );
   }
 

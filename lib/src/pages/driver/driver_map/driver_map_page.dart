@@ -33,6 +33,8 @@ class _DriverMapPageState extends State<DriverMapPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      key: _con.key,
+      drawer: _drawer(),
       body: Center(
         child: Stack(
           children: [
@@ -59,18 +61,78 @@ class _DriverMapPageState extends State<DriverMapPage> {
     );
   }
 
+  Widget _drawer() {
+    return Drawer(
+      child: ListView(
+        children: [
+          DrawerHeader(
+            decoration: BoxDecoration(color: Colors.amber),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Container(
+                  child: Text(
+                    _con.driver?.name ?? '',
+                    style: TextStyle(
+                      fontSize: 18,
+                      color: Colors.black,
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                Container(
+                  child: Text(
+                    _con.driver?.email ?? '',
+                    style: TextStyle(
+                      fontSize: 14,
+                      color: Colors.grey[800],
+                      fontWeight: FontWeight.bold,
+                    ),
+                    maxLines: 1,
+                  ),
+                ),
+                SizedBox(
+                  height: 10,
+                ),
+                CircleAvatar(
+                  backgroundImage: AssetImage('assets/img/profile.jpg'),
+                  radius: 40,
+                ),
+              ],
+            ),
+          ),
+          ListTile(
+            title: Text('Editar perfil'),
+            trailing: Icon(Icons.edit),
+            onTap: () {},
+          ),
+          ListTile(
+            title: Text('Cerrar sesion'),
+            trailing: Icon(Icons.power_settings_new),
+            onTap: () {},
+          ),
+        ],
+      ),
+    );
+  }
+
   Widget _buttonCenterPosition() {
-    return Container(
-      margin: EdgeInsets.symmetric(horizontal: 5),
-      child: Card(
-        shape: CircleBorder(),
-        elevation: 4.0,
-        child: Container(
-          padding: EdgeInsets.all(10),
-          child: Icon(
-            Icons.location_searching,
-            color: Colors.grey[600],
-            size: 20,
+    return GestureDetector(
+      onTap: _con.centerPosition,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 5),
+        child: Card(
+          shape: CircleBorder(),
+          elevation: 4.0,
+          child: Container(
+            padding: EdgeInsets.all(10),
+            child: Icon(
+              Icons.location_searching,
+              color: Colors.grey[600],
+              size: 20,
+            ),
           ),
         ),
       ),
@@ -80,7 +142,7 @@ class _DriverMapPageState extends State<DriverMapPage> {
   Widget _buttonDrawer() {
     return Container(
       child: IconButton(
-          onPressed: () {},
+          onPressed: _con.openDrawer,
           icon: Icon(
             Icons.menu,
             color: Colors.white,

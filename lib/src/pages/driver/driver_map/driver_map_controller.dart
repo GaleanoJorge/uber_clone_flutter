@@ -6,7 +6,9 @@ import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:uber_clone/src/models/driver.dart';
 import 'package:uber_clone/src/providers/auth_provider.dart';
+import 'package:uber_clone/src/providers/driver_provider.dart';
 import 'package:uber_clone/src/providers/geofire_provider.dart';
 import 'package:uber_clone/src/utils/progress_dialog.dart';
 import 'package:uber_clone/src/utils/strings.dart';
@@ -31,12 +33,16 @@ class DriverMapController {
 
   late GeofireProvider _geofireProvider;
   late AuthProvider _authProvider;
+  late DriverProvider _driverProvider;
+
+  Driver? driver;
 
   bool isConnect = false;
 
   late ProgressDialog _progressDialog;
 
   StreamSubscription<DocumentSnapshot<Object?>>? _statusSubscription;
+  StreamSubscription<DocumentSnapshot<Object?>>? _DriverInfoSubscription;
 
   Future? init(BuildContext context, Function refresh) async {
     this.context = context;
@@ -44,15 +50,33 @@ class DriverMapController {
 
     _geofireProvider = new GeofireProvider();
     _authProvider = new AuthProvider();
+    _driverProvider = new DriverProvider();
     _progressDialog =
         MyProgressDialog.createPrograssDialog(context, 'Conectandose...');
     markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
     checkGPS();
+    getDriverInfo();
   }
 
   void dispose() {
     _positionStream?.cancel();
     _statusSubscription?.cancel();
+    _DriverInfoSubscription?.cancel();
+  }
+
+  void getDriverInfo() {
+    Stream<DocumentSnapshot> driverStream =
+        _driverProvider.getByIdStream(_authProvider.getUser()!.uid);
+
+    _DriverInfoSubscription = driverStream.listen((DocumentSnapshot document) {
+      driver = Driver.fromJson(document.data() as Map<String, dynamic>);
+      print('hollllll-----------: ${driver!.toJson()}');
+      refresh();
+    });
+  }
+
+  void openDrawer() {
+    key.currentState!.openDrawer();
   }
 
   void onMapCreated(GoogleMapController controller) {

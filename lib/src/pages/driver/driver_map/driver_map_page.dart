@@ -24,6 +24,13 @@ class _DriverMapPageState extends State<DriverMapPage> {
   }
 
   @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+    _con.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: Center(
@@ -86,9 +93,9 @@ class _DriverMapPageState extends State<DriverMapPage> {
       margin: EdgeInsets.symmetric(vertical: 30, horizontal: 60),
       height: 50,
       child: ButtonApp(
-        text: 'Conectarse',
-        onPressed: () {},
-        color: Colors.amber,
+        text: _con.isConnect ? 'DESCONECTARSE' : 'CONECTARSE',
+        onPressed: _con.connect,
+        color: _con.isConnect ? Colors.grey[300] : Colors.amber,
         textColor: Colors.black,
       ),
     );

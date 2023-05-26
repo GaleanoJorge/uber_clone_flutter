@@ -1,9 +1,14 @@
 import 'dart:async';
 import 'dart:ffi';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
+import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
+import 'package:uber_clone/src/providers/auth_provider.dart';
+import 'package:uber_clone/src/providers/geofire_provider.dart';
+import 'package:uber_clone/src/utils/progress_dialog.dart';
 import 'package:uber_clone/src/utils/strings.dart';
 import 'package:location/location.dart' as location;
 import 'package:uber_clone/src/utils/snackbar.dart' as utils;
@@ -18,17 +23,36 @@ class DriverMapController {
       CameraPosition(target: LatLng(4.5809721, -74.124009), zoom: 14.0);
 
   late Position _position;
-  late StreamSubscription<Position> _positionStream;
+  StreamSubscription<Position>? _positionStream;
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
 
   late BitmapDescriptor markerDriver;
 
+  late GeofireProvider _geofireProvider;
+  late AuthProvider _authProvider;
+
+  bool isConnect = false;
+
+  late ProgressDialog _progressDialog;
+
+  StreamSubscription<DocumentSnapshot<Object?>>? _statusSubscription;
+
   Future? init(BuildContext context, Function refresh) async {
     this.context = context;
     this.refresh = refresh;
+
+    _geofireProvider = new GeofireProvider();
+    _authProvider = new AuthProvider();
+    _progressDialog =
+        MyProgressDialog.createPrograssDialog(context, 'Conectandose...');
     markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
     checkGPS();
+  }
+
+  void dispose() {
+    _positionStream?.cancel();
+    _statusSubscription?.cancel();
   }
 
   void onMapCreated(GoogleMapController controller) {
@@ -42,14 +66,50 @@ class DriverMapController {
     if (isLocationEnabled) {
       print('gps activo');
       updateLocation();
+      checkIfIsConnect();
     } else {
       print('gps inactivo');
       bool locationGPS = await location.Location().requestService();
       if (locationGPS) {
         updateLocation();
+        checkIfIsConnect();
         print('el usuario activo el gps');
       }
     }
+  }
+
+  void saveLocation() async {
+    await _geofireProvider.create(
+        _authProvider.getUser()!.uid, _position.latitude, _position.longitude);
+    _progressDialog.hide();
+  }
+
+  void connect() {
+    if (isConnect) {
+      disconnect();
+    } else {
+      _progressDialog.show();
+      updateLocation();
+    }
+  }
+
+  void disconnect() {
+    _positionStream?.cancel();
+    _geofireProvider.delete(_authProvider.getUser()!.uid);
+  }
+
+  void checkIfIsConnect() {
+    Stream<DocumentSnapshot> status =
+        _geofireProvider.getLocationByIdStream(_authProvider.getUser()!.uid);
+
+    _statusSubscription = status.listen((DocumentSnapshot document) {
+      if (document.exists) {
+        isConnect = true;
+      } else {
+        isConnect = false;
+      }
+      refresh();
+    });
   }
 
   void updateLocation() async {
@@ -57,7 +117,7 @@ class DriverMapController {
       await _determinePosition();
       _position = (await Geolocator.getLastKnownPosition())!;
       centerPosition();
-
+      saveLocation();
       addMarker('driver', _position.latitude, _position.longitude,
           'Tu Posición', '', markerDriver);
 
@@ -72,6 +132,7 @@ class DriverMapController {
         addMarker('driver', _position.latitude, _position.longitude,
             'Tu Posición', '', markerDriver);
         animateCameraToPosition(_position.latitude, _position.longitude);
+        saveLocation();
         refresh();
       });
     } catch (error) {

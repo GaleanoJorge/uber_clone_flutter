@@ -64,6 +64,11 @@ class DriverMapController {
     _DriverInfoSubscription?.cancel();
   }
 
+  void signOut() async {
+    await _authProvider.signOut();
+    Navigator.pushNamedAndRemoveUntil(context!, 'home', (route) => false);
+  }
+
   void getDriverInfo() {
     Stream<DocumentSnapshot> driverStream =
         _driverProvider.getByIdStream(_authProvider.getUser()!.uid);

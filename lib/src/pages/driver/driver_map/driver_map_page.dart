@@ -111,7 +111,7 @@ class _DriverMapPageState extends State<DriverMapPage> {
           ListTile(
             title: Text('Cerrar sesion'),
             trailing: Icon(Icons.power_settings_new),
-            onTap: () {},
+            onTap: _con.signOut,
           ),
         ],
       ),

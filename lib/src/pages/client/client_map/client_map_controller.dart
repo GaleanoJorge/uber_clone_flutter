@@ -54,7 +54,7 @@ class ClientMapController {
     _clientProvider = new ClientProvider();
     // _progressDialog =
     //     MyProgressDialog.createPrograssDialog(context, 'Conectandose...');
-    markerDriver = await createMarkerImageFromAsset('assets/img/taxi_icon.png');
+    markerDriver = await createMarkerImageFromAsset('assets/img/icon_taxi.png');
     checkGPS();
     getClientInfo();
   }
@@ -163,7 +163,7 @@ class ClientMapController {
 
     if (controller != null) {
       controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
-          target: LatLng(latitude, longitude), bearing: 0, zoom: 17)));
+          target: LatLng(latitude, longitude), bearing: 0, zoom: 13)));
     }
   }
 
@@ -224,10 +224,10 @@ class ClientMapController {
       position: LatLng(lat, lng),
       infoWindow: InfoWindow(title: title, snippet: content),
       draggable: false,
-      zIndex: 2,
-      flat: true,
-      anchor: Offset(0.5, 0.5),
-      rotation: _position!.heading,
+      // zIndex: 2,
+      // flat: true,
+      // anchor: Offset(0.5, 0.5),
+      // rotation: _position!.heading,
     );
     print('add marker: $marker');
     markers[id] = marker;

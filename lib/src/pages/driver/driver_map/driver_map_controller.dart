@@ -1,5 +1,4 @@
 import 'dart:async';
-import 'dart:ffi';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
@@ -19,12 +18,12 @@ class DriverMapController {
   BuildContext? context;
   late Function refresh;
   GlobalKey<ScaffoldState> key = new GlobalKey<ScaffoldState>();
-  Completer<GoogleMapController> _mapController = Completer();
+  Completer<GoogleMapController>? _mapController = Completer();
 
   CameraPosition initialPosition =
       CameraPosition(target: LatLng(4.5809721, -74.124009), zoom: 14.0);
 
-  late Position _position;
+  Position? _position;
   StreamSubscription<Position>? _positionStream;
 
   Map<MarkerId, Marker> markers = <MarkerId, Marker>{};
@@ -86,7 +85,7 @@ class DriverMapController {
 
   void onMapCreated(GoogleMapController controller) {
     controller.setMapStyle(Strings.map_style_dark);
-    _mapController.complete(controller);
+    _mapController!.complete(controller);
   }
 
   void checkGPS() async {
@@ -108,8 +107,8 @@ class DriverMapController {
   }
 
   void saveLocation() async {
-    await _geofireProvider.create(
-        _authProvider.getUser()!.uid, _position.latitude, _position.longitude);
+    await _geofireProvider.create(_authProvider.getUser()!.uid,
+        _position!.latitude, _position!.longitude);
     _progressDialog.hide();
   }
 
@@ -147,7 +146,7 @@ class DriverMapController {
       _position = (await Geolocator.getLastKnownPosition())!;
       centerPosition();
       saveLocation();
-      addMarker('driver', _position.latitude, _position.longitude,
+      addMarker('driver', _position!.latitude, _position!.longitude,
           'Tu Posición', '', markerDriver);
 
       refresh();
@@ -158,9 +157,9 @@ class DriverMapController {
         distanceFilter: 1,
       )).listen((Position position) {
         _position = position;
-        addMarker('driver', _position.latitude, _position.longitude,
+        addMarker('driver', _position!.latitude, _position!.longitude,
             'Tu Posición', '', markerDriver);
-        animateCameraToPosition(_position.latitude, _position.longitude);
+        animateCameraToPosition(_position!.latitude, _position!.longitude);
         saveLocation();
         refresh();
       });
@@ -171,7 +170,7 @@ class DriverMapController {
 
   void centerPosition() {
     if (_position != null) {
-      animateCameraToPosition(_position.latitude, _position.longitude);
+      animateCameraToPosition(_position!.latitude, _position!.longitude);
     } else {
       utils.Snackbar.showSnackbarr(
           context!, 'Activa el GPS para obtener la posición.');
@@ -179,7 +178,7 @@ class DriverMapController {
   }
 
   Future? animateCameraToPosition(double latitude, double longitude) async {
-    GoogleMapController controller = await _mapController.future;
+    GoogleMapController? controller = await _mapController?.future;
 
     if (controller != null) {
       controller.animateCamera(CameraUpdate.newCameraPosition(CameraPosition(
@@ -247,7 +246,7 @@ class DriverMapController {
       zIndex: 2,
       flat: true,
       anchor: Offset(0.5, 0.5),
-      rotation: _position.heading,
+      rotation: _position!.heading,
     );
 
     markers[id] = marker;

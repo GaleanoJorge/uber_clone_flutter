@@ -6,7 +6,6 @@ import 'package:uber_clone/src/pages/driver/driver_register/driver_register_page
 import 'package:uber_clone/src/pages/home/home_page.dart';
 import 'package:uber_clone/src/pages/login/login_page.dart';
 import 'package:uber_clone/src/pages/client/client_register/client_register_page.dart';
-import 'package:uber_clone/src/utils/colors.dart' as utils;
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -25,7 +25,7 @@ class DriverRegisterController {
   DriverProvider? _driverProvider;
   ProgressDialog? _myProgressDialog;
 
-  Future? init(BuildContext context) {
+  Future? init(BuildContext context) async {
     this.context = context;
 
     _authProvider = new AuthProvider();

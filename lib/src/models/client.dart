@@ -2,7 +2,6 @@
 //
 //     final client = clientFromJson(jsonString);
 
-import 'package:meta/meta.dart';
 import 'dart:convert';
 
 Client clientFromJson(String str) => Client.fromJson(json.decode(str));

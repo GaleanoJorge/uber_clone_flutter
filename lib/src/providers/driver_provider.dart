@@ -1,5 +1,3 @@
-import 'dart:ffi';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:uber_clone/src/models/driver.dart';
 
@@ -17,9 +15,6 @@ class DriverProvider {
       return _ref.doc(driver.id).set(driver.toJson());
     } catch (error) {
       errorMessage = error.toString();
-    }
-
-    if (errorMessage != null) {
       return Future.error(errorMessage);
     }
   }

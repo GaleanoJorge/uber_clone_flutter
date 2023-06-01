@@ -4,7 +4,6 @@ import 'package:uber_clone/src/providers/auth_provider.dart';
 import 'package:uber_clone/src/providers/client_provider.dart';
 import 'package:uber_clone/src/utils/snackbar.dart' as utils;
 import 'package:progress_dialog_null_safe/progress_dialog_null_safe.dart';
-import 'package:uber_clone/src/providers/auth_provider.dart';
 import 'package:uber_clone/src/utils/progress_dialog.dart';
 
 class ClientRegisterController {
@@ -19,7 +18,7 @@ class ClientRegisterController {
   ClientProvider? _clientProvider;
   ProgressDialog? _myProgressDialog;
 
-  Future? init(BuildContext context) {
+  Future? init(BuildContext context) async {
     this.context = context;
 
     _authProvider = new AuthProvider();

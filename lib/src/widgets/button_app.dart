@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:uber_clone/src/utils/colors.dart' as utils;
 
 class ButtonApp extends StatelessWidget {
-  String? text;
-  Color? textColor;
-  Color? color;
-  IconData? icon;
-  Function? onPressed;
+  final String? text;
+  final Color? textColor;
+  final Color? color;
+  final IconData? icon;
+  final Function? onPressed;
 
-  ButtonApp({
+  const ButtonApp({
     required this.text,
     required this.onPressed,
     this.color = utils.Colors.uberCloneColor,
@@ -20,6 +20,12 @@ class ButtonApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
+      style: ElevatedButton.styleFrom(
+        primary: this.color,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15),
+        ),
+      ),
       onPressed: () {
         onPressed!();
       },
@@ -55,12 +61,6 @@ class ButtonApp extends StatelessWidget {
             ),
           )
         ],
-      ),
-      style: ElevatedButton.styleFrom(
-        primary: this.color,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(15),
-        ),
       ),
     );
   }
